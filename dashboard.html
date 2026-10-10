@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS Dashboard -->
+    <link rel="stylesheet" href="style-karyawan.css">
+
+    <style>
+     .page-title {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .card-master {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+        }
+
+        .card-master .card-header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 18px 20px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 13px;
+            font-weight: 600;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f8fbff;
+        }
+
+        .btn-action {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .badge-mandor {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+        }
+
+        .modal-header {
+            background: #0d6efd;
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 .2rem rgba(13,110,253,.15);
+        }
+
+        .empty-data {
+            padding: 40px 10px !important;
+            color: #6c757d;
+        }
+
+        .search-box {
+            max-width: 280px;
+        }
+
+        @media (max-width: 768px) {
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+            .toolbar .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- =========================
+     NAVBAR
+========================= -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <!-- Toggle -->
+        <button class="toggle-btn btn btn-light d-flex align-items-center justify-content-center" id="toggleSidebar" type="button" title="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- User -->
+        <div class="dropdown ms-auto">
+
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="https://ui-avatars.com/api/?name=Administrator&background=0d6efd&color=fff"
+                    width="38" height="38" class="rounded-circle border border-white me-2" id="avatarUser" alt="User">
+                <div class="text-start">
+
+                    <div id="namaUser" class="fw-semibold">
+                        Administrator
+                    </div>
+
+                    <small id="levelUser">
+                        Admin
+                    </small>
+
+                </div>
+
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-person me-2"></i>
+                        Profil
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <a class="dropdown-item text-danger"
+                        href="#" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <ul class="nav flex-column p-2">
+
+        <!-- DASHBOARD -->
+        <li class="nav-item">
+            <a href="dashboard.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <small class="text-secondary px-3 menu-title">
+                MASTER DATA
+            </small>
+        </li>
+        <li class="nav-item menu-admin">
+            <a href="master-karyawan.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Karyawan">
+                <i class="bi bi-people"></i>
+                <span>Karyawan</span>
+            </a>
+        </li>	
+
+        <li class="nav-item menu-admin">
+            <a href="master-user.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master User">
+                <i class="bi bi-person-gear"></i>
+                <span>User</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-anggota.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Anggota">
+                <i class="bi bi-person-gear"></i>
+                <span>Anggota</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-buku.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Buku">
+                <i class="bi bi-book"></i>
+                <span>Buku</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-mandor.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Mandor">
+                <i class="bi bi-people"></i>
+                <span>Mandor</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="lokasi.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Lokasi">
+                <i class="bi bi-geo-alt"></i>
+                <span>Lokasi</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="aktivitas.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Aktivitas">
+                <i class="bi bi-list-check"></i>
+                <span>Aktivitas</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                TRANSAKSI
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="peminjaman.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Peminjaman">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="pengembalian.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Pengembalian">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Pengembalian</span>
+            </a>
+        </li>
+
+	<li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                LAPORAN
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Pinjam">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Lap.Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Kembali">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Lap.Pengembalian</span>
+            </a>
+        </li>
+
+
+    </ul>
+</aside>
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main    class="main"    id="main">
+<!-- Konten Dashboard -->
+<div class="container-fluid">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="mb-4">
+
+        <h4 class="fw-semibold mb-1">
+            Dashboard
+        </h4>
+
+        <p class="text-muted mb-0">
+            Ringkasan data karyawan dan mandor
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         STATISTIK
+    ========================= -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- TOTAL KARYAWAN -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Karyawan
+                            </p>
+
+                            <h3
+                                class="fw-bold mb-0"
+                                id="totalKaryawan"
+                            >
+                                0
+                            </h3>
+
+                        </div>
+
+                        <div
+                            class="bg-primary bg-opacity-10
+                                   text-primary rounded-3
+                                   p-3"
+                        >
+                            <i class="bi bi-people fs-3"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL MANDOR -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Mandor
+                            </p>
+
+                            <h3
+                                class="fw-bold mb-0"
+                                id="totalMandor"
+                            >
+                                0
+                            </h3>
+
+                        </div>
+
+                        <div
+                            class="bg-success bg-opacity-10
+                                   text-success rounded-3
+                                   p-3"
+                        >
+                            <i class="bi bi-person-badge fs-3"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RATA-RATA -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Rata-rata Karyawan / Mandor
+                            </p>
+
+                            <h3
+                                class="fw-bold mb-0"
+                                id="rataKaryawan"
+                            >
+                                0
+                            </h3>
+
+                        </div>
+
+                        <div
+                            class="bg-warning bg-opacity-10
+                                   text-warning rounded-3
+                                   p-3"
+                        >
+                            <i class="bi bi-bar-chart fs-3"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<!-- TOTAL BUKU -->
+
+<div class="col-xl-4 col-md-6">
+
+    <div class="card border-0 shadow-sm h-100">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <p class="text-muted mb-1">
+                        Total Buku
+                    </p>
+
+                    <h3
+                        class="fw-bold mb-0"
+                        id="totalBuku"
+                    >
+                        0
+                    </h3>
+
+                </div>
+
+                <div
+                    class="bg-info bg-opacity-10
+                           text-info rounded-3
+                           p-3"
+                >
+                    <i class="bi bi-book fs-3"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    
+</div>
+
+</main> 
+
+
+<!-- =========================
+     BOOTSTRAP JS
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

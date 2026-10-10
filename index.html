@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login Dashboard</title>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
+<style>
+
+body{
+
+    min-height:100vh;
+    background:linear-gradient(
+        135deg,
+        #0d6efd,
+        #6f42c1
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+
+.login-card{
+
+    width:380px;
+    border:none;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+
+}
+
+
+
+.avatar{
+
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#0d6efd;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    margin:auto;
+
+}
+
+
+.form-control{
+
+    padding:12px 15px;
+
+}
+
+
+
+.btn-login{
+
+    padding:12px;
+    border-radius:10px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+<div class="card login-card p-4">
+
+
+<div class="card-body">
+
+
+
+<div class="avatar mb-3">
+
+<i class="bi bi-person"></i>
+
+</div>
+
+
+
+<h3 class="text-center mb-4">
+
+Dashboard Login
+
+</h3>
+
+
+
+<div id="alertBox"></div>
+
+
+
+<form id="loginForm">
+
+
+
+<div class="mb-3">
+
+
+<label class="form-label">
+
+Username
+
+</label>
+
+
+<div class="input-group">
+
+<span class="input-group-text">
+
+<i class="bi bi-person"></i>
+
+</span>
+
+
+<input type="text"
+id="username"
+class="form-control"
+placeholder="Username">
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+
+<label class="form-label">
+
+Password
+
+</label>
+
+
+<div class="input-group">
+
+
+<span class="input-group-text">
+
+<i class="bi bi-lock"></i>
+
+</span>
+
+
+
+<input type="password"
+id="password"
+class="form-control"
+placeholder="Password">
+
+
+
+<button type="button"
+class="btn btn-outline-secondary"
+id="showPassword">
+
+<i class="bi bi-eye"></i>
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="d-flex justify-content-between mb-3">
+
+
+<div>
+
+<input type="checkbox"
+id="remember">
+
+<label>
+
+Remember me
+
+</label>
+
+</div>
+
+
+
+<a href="#"
+class="text-decoration-none">
+
+Forgot Password?
+
+</a>
+
+
+</div>
+
+
+
+
+
+<button class="btn btn-primary w-100 btn-login">
+
+
+<span id="loginText">
+
+Login
+
+</span>
+
+
+<span id="loading"
+class="spinner-border spinner-border-sm d-none">
+
+</span>
+
+
+</button>
+
+
+
+
+</form>
+
+
+
+<p class="text-center text-muted mt-4 mb-0">
+
+© 2026 Dashboard
+
+</p>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+
+
+// =================================
+// BUAT USER DEFAULT
+// =================================
+
+
+let dataUser = JSON.parse(
+    localStorage.getItem("dataUser")
+);
+
+
+
+if(!dataUser){
+
+
+    dataUser=[
+
+        {
+
+            id:1,
+
+            nama:"Administrator",
+
+            username:"admin",
+
+            password:"12345",
+
+            level:"Admin"
+
+        }
+
+    ];
+
+
+    localStorage.setItem(
+        "dataUser",
+        JSON.stringify(dataUser)
+    );
+
+
+}
+
+
+
+
+// =================================
+// ELEMENT
+// =================================
+
+
+const loginForm =
+document.getElementById("loginForm");
+
+
+const username =
+document.getElementById("username");
+
+
+const password =
+document.getElementById("password");
+
+
+const remember =
+document.getElementById("remember");
+
+
+const alertBox =
+document.getElementById("alertBox");
+
+
+const showPassword =
+document.getElementById("showPassword");
+
+
+
+
+
+// =================================
+// SHOW PASSWORD
+// =================================
+
+
+showPassword.onclick=function(){
+
+
+    if(password.type==="password"){
+
+
+        password.type="text";
+
+
+        showPassword.innerHTML=
+        '<i class="bi bi-eye-slash"></i>';
+
+
+    }else{
+
+
+        password.type="password";
+
+
+        showPassword.innerHTML=
+        '<i class="bi bi-eye"></i>';
+
+    }
+
+
+};
+
+
+
+
+
+// =================================
+// REMEMBER
+// =================================
+
+
+let simpanUsername =
+localStorage.getItem("rememberUser");
+
+
+if(simpanUsername){
+
+
+    username.value=simpanUsername;
+
+    remember.checked=true;
+
+}
+
+
+
+
+
+
+
+// =================================
+// LOGIN
+// =================================
+
+
+loginForm.addEventListener(
+"submit",
+function(e){
+
+
+e.preventDefault();
+
+
+
+let inputUsername =
+username.value.trim();
+
+
+
+let inputPassword =
+password.value.trim();
+
+
+
+
+
+if(inputUsername===""){
+
+
+    tampilAlert(
+    "Username harus diisi",
+    "danger"
+    );
+
+
+    return;
+
+}
+
+
+
+
+if(inputPassword===""){
+
+
+    tampilAlert(
+    "Password harus diisi",
+    "danger"
+    );
+
+
+    return;
+
+}
+
+
+
+
+
+
+let akun =
+dataUser.find(function(data){
+
+
+return data.username===inputUsername
+&&
+data.password===inputPassword;
+
+
+});
+
+
+
+
+
+
+
+if(akun){
+
+
+
+sessionStorage.setItem(
+"login",
+"true"
+);
+
+
+
+sessionStorage.setItem(
+"nama",
+akun.nama
+);
+
+
+
+sessionStorage.setItem(
+"level",
+akun.level
+);
+
+
+
+
+
+if(remember.checked){
+
+
+localStorage.setItem(
+"rememberUser",
+inputUsername
+);
+
+
+}else{
+
+
+localStorage.removeItem(
+"rememberUser"
+);
+
+
+}
+
+
+
+
+
+
+tampilAlert(
+"Login berhasil",
+"success"
+);
+
+
+
+setTimeout(function(){
+
+
+window.location.href="dashboard.html";
+
+
+},800);
+
+
+
+
+}else{
+
+
+tampilAlert(
+"Username atau password salah",
+"danger"
+);
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+function tampilAlert(pesan,warna){
+
+
+alertBox.innerHTML=`
+
+<div class="alert alert-${warna}">
+
+${pesan}
+
+</div>
+
+`;
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

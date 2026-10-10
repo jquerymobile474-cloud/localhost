@@ -1,0 +1,747 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #212529;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    height: 60px;
+    background: #0d6efd;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    padding: 0 15px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+}
+
+
+/* =====================================================
+   TOGGLE BUTTON
+===================================================== */
+
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    background: transparent;
+
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    transition: .3s;
+
+    padding: 0;
+}
+
+.toggle-btn i {
+    font-size: 22px;
+    color: #fff;
+}
+
+.toggle-btn:hover {
+    background: rgba(255, 255, 255, .15);
+    color: #fff;
+}
+
+.toggle-btn:hover i {
+    color: #fff;
+}
+
+
+/* =====================================================
+   USER NAVBAR
+===================================================== */
+
+.navbar .dropdown-toggle::after {
+    margin-left: 8px;
+}
+
+.navbar .dropdown-menu {
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+}
+
+.navbar .dropdown-item {
+    font-size: 14px;
+    padding: 9px 15px;
+}
+
+.navbar .dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    position: fixed;
+
+    top: 60px;
+    left: 0;
+
+    width: 250px;
+    height: calc(100vh - 60px);
+
+    background: #212529;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transition: .3s;
+
+    z-index: 999;
+
+    padding-top: 10px;
+}
+
+
+/* =====================================================
+   SIDEBAR COLLAPSED
+===================================================== */
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+
+/* =====================================================
+   SIDEBAR SCROLLBAR
+===================================================== */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #212529;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #495057;
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   SIDEBAR MENU
+===================================================== */
+
+.sidebar .nav {
+    width: 100%;
+}
+
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.sidebar .nav-link {
+
+    color: #fff;
+
+    padding: 12px 15px;
+
+    margin: 4px 8px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    white-space: nowrap;
+
+    transition: .3s;
+}
+
+
+.sidebar .nav-link:hover {
+    background: #0d6efd;
+}
+.sidebar .nav-link.active {
+    background: #0d6efd;
+}
+
+
+/* ICON */
+
+.sidebar .nav-link i {
+    min-width: 28px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+
+/* TEXT */
+
+.sidebar .nav-link span {
+    transition: .2s;
+}
+
+/* COLLAPSED */
+
+.sidebar.collapsed .nav-link {
+
+    justify-content: center;
+
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.sidebar.collapsed .nav-link span {
+
+    display: none;
+}
+
+
+.sidebar.collapsed .menu-title {
+
+    display: none;
+}
+/* =====================================================
+   SIDEBAR TEXT
+===================================================== */
+
+.sidebar .nav-link span {
+    transition: .2s;
+}
+
+.sidebar.collapsed .nav-link span {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+/* =====================================================
+   SIDEBAR MENU TITLE
+===================================================== */
+
+.menu-title {
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    margin: 10px 0 5px 15px;
+
+    transition: .2s;
+}
+
+.sidebar.collapsed .menu-title {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+/* =====================================================
+   SIDEBAR COLLAPSED MENU
+===================================================== */
+
+.sidebar.collapsed .nav-link {
+
+    justify-content: center;
+
+    padding-left: 0;
+    padding-right: 0;
+
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.sidebar.collapsed .nav-link i {
+    min-width: auto;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+
+    margin-top: 60px;
+
+    margin-left: 250px;
+
+    padding: 25px;
+
+    min-height: calc(100vh - 60px);
+
+    transition: .3s;
+}
+
+
+/* =====================================================
+   MAIN EXPAND
+===================================================== */
+
+.main.expand {
+    margin-left: 70px;
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+
+    font-size: 22px;
+
+    font-weight: 600;
+
+    color: #212529;
+}
+
+.page-subtitle {
+
+    font-size: 14px;
+
+    color: #6c757d;
+}
+
+
+/* =====================================================
+   MASTER CARD
+===================================================== */
+
+.card-master {
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #fff;
+
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, .07);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-master .card-header {
+
+    background: #fff;
+
+    border-bottom: 1px solid #eee;
+
+    padding: 18px 20px;
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-box {
+
+    width: 280px;
+    max-width: 100%;
+}
+
+.search-box .input-group-text {
+
+    border-color: #dee2e6;
+
+    color: #6c757d;
+}
+
+.search-box .form-control {
+
+    border-left: none;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table {
+
+    margin-bottom: 0;
+}
+
+.table thead th {
+
+    background: #f8f9fa;
+
+    color: #495057;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 13px 15px;
+
+    border-bottom: 1px solid #dee2e6;
+
+    white-space: nowrap;
+}
+
+.table tbody td {
+
+    font-size: 14px;
+
+    padding: 13px 15px;
+
+    vertical-align: middle;
+
+    color: #343a40;
+}
+
+.table-hover tbody tr:hover {
+
+    background: #f8fbff;
+}
+
+
+/* =====================================================
+   BADGE MANDOR
+===================================================== */
+
+.badge-mandor {
+
+    display: inline-block;
+
+    background: #e7f1ff;
+
+    color: #0d6efd;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.btn {
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.btn-primary {
+
+    background: #0d6efd;
+
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+
+    background: #0b5ed7;
+
+    border-color: #0a58ca;
+}
+
+
+/* =====================================================
+   ACTION BUTTON
+===================================================== */
+
+.btn-action {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-label {
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    color: #343a40;
+}
+
+.form-control,
+.form-select {
+
+    min-height: 40px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    border: 1px solid #dee2e6;
+}
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #0d6efd;
+
+    box-shadow:
+        0 0 0 .2rem
+        rgba(13, 110, 253, .12);
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-content {
+
+    border: none;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 40px
+        rgba(0, 0, 0, .18);
+}
+
+.modal-header {
+
+    background: #0d6efd;
+
+    color: #fff;
+
+    border-bottom: none;
+
+    padding: 16px 20px;
+}
+
+.modal-header .modal-title {
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.modal-header .btn-close {
+
+    filter:
+        brightness(0)
+        invert(1);
+}
+
+.modal-body {
+
+    padding: 20px;
+}
+
+.modal-footer {
+
+    padding: 15px 20px;
+
+    border-top: 1px solid #eee;
+}
+
+
+/* =====================================================
+   EMPTY DATA
+===================================================== */
+
+.empty-data {
+
+    padding: 45px 10px !important;
+
+    color: #6c757d;
+
+    font-size: 14px;
+}
+
+.empty-data i {
+
+    color: #adb5bd;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    margin-left: 250px;
+
+    padding: 15px 25px;
+
+    background: #fff;
+
+    border-top: 1px solid #eee;
+
+    transition: .3s;
+
+    font-size: 13px;
+
+    color: #6c757d;
+}
+
+.footer.expand {
+
+    margin-left: 70px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        width: 70px;
+    }
+
+    .sidebar .nav-link {
+
+        justify-content: center;
+
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .sidebar .nav-link span {
+
+        display: none;
+    }
+
+    .sidebar .menu-title {
+
+        display: none;
+    }
+
+    .main {
+
+        margin-left: 70px;
+
+        padding: 18px;
+    }
+
+    .main.expand {
+
+        margin-left: 70px;
+    }
+
+    .toolbar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-box {
+
+        width: 100%;
+    }
+
+    .toolbar .btn {
+
+        width: 100%;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE KECIL
+===================================================== */
+
+@media (max-width: 576px) {
+
+    .main {
+
+        padding: 15px;
+    }
+
+    .page-title {
+
+        font-size: 19px;
+    }
+
+    .navbar {
+
+        padding: 0 10px;
+    }
+
+    .navbar .text-start {
+
+        display: none;
+    }
+
+}

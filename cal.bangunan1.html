@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Kebutuhan Bata Rumah</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.header {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 30px;
+    border-radius: 18px 18px 0 0;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    opacity: .9;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1d4ed8;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.kamar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kamar-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 50px;
+    gap: 10px;
+    align-items: center;
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.kamar-item strong {
+    color: #1d4ed8;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    padding: 9px 12px;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.button-area {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.result {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.result .label {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.result .value {
+    font-size: 25px;
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+.highlight {
+    background: #eff6ff;
+    border: 2px solid #2563eb;
+}
+
+.info {
+    background: #fffbeb;
+    border-left: 5px solid #f59e0b;
+    padding: 15px;
+    margin-top: 25px;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.footer {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    color: #64748b;
+    border-radius: 0 0 18px 18px;
+}
+
+@media(max-width: 700px) {
+
+    body {
+        padding: 8px;
+    }
+
+    .grid,
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kamar-item {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+```
+<h1>🏠 Kalkulator Kebutuhan Bata Rumah</h1>
+
+<p>
+    Hitung dinding luar, dinding kamar, bata, semen dan pasir
+</p>
+```
+
+</div>
+
+<div class="card">
+
+<!-- ============================= -->
+
+<!-- UKURAN BANGUNAN -->
+
+<!-- ============================= -->
+
+<div class="section">
+
+<div class="section-title">
+📐 Ukuran Bangunan
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+
+<label>Panjang Bangunan (m)</label>
+
+<input
+type="number"
+id="panjangBangunan"
+value="11"
+min="0"
+step="0.01"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Lebar Bangunan (m)</label>
+
+<input
+type="number"
+id="lebarBangunan"
+value="8"
+min="0"
+step="0.01"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Tinggi Dinding (m)</label>
+
+<input
+type="number"
+id="tinggiBangunan"
+value="4"
+min="0"
+step="0.01"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Bata per m²</label>
+
+<input
+type="number"
+id="bataPerM2"
+value="75"
+min="1"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Cadangan Bata (%)</label>
+
+<input
+type="number"
+id="cadangan"
+value="10"
+min="0"
+
+>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<!-- PINTU DAN JENDELA -->
+
+<!-- ============================= -->
+
+<div class="section">
+
+<div class="section-title">
+🚪 Pintu dan Jendela
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+
+<label>Jumlah Pintu</label>
+
+<input
+type="number"
+id="jumlahPintu"
+value="1"
+min="0"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Luas setiap Pintu (m²)</label>
+
+<input
+type="number"
+id="luasPintu"
+value="1.89"
+min="0"
+step="0.01"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Jumlah Jendela</label>
+
+<input
+type="number"
+id="jumlahJendela"
+value="2"
+min="0"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Luas setiap Jendela (m²)</label>
+
+<input
+type="number"
+id="luasJendela"
+value="1.44"
+min="0"
+step="0.01"
+
+>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<!-- KAMAR -->
+
+<!-- ============================= -->
+
+<div class="section">
+
+<div class="section-title">
+🛏️ Data Kamar
+</div>
+
+<p style="margin-bottom:15px;color:#64748b">
+
+Masukkan ukuran setiap kamar.
+Program akan menghitung dinding pembatas berdasarkan ukuran kamar.
+
+</p>
+
+<div id="kamarList" class="kamar-list"></div>
+
+<div class="button-area">
+
+<button
+class="btn btn-primary"
+onclick="tambahKamar()"
+
+>
+
+* Tambah Kamar
+
+  </button>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<!-- MATERIAL -->
+
+<!-- ============================= -->
+
+<div class="section">
+
+<div class="section-title">
+🧱 Perkiraan Material
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+
+<label>Semen per m² (kg)</label>
+
+<input
+type="number"
+id="semenPerM2"
+value="10"
+min="0"
+step="0.1"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label>Pasir per m² (m³)</label>
+
+<input
+type="number"
+id="pasirPerM2"
+value="0.03"
+min="0"
+step="0.001"
+
+>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<!-- HASIL -->
+
+<!-- ============================= -->
+
+<div class="section">
+
+<div class="section-title">
+📊 Hasil Perhitungan
+</div>
+
+<div class="result-grid">
+
+<div class="result">
+
+<div class="label">
+Luas Dinding Luar
+</div>
+
+<div
+class="value"
+id="hasilDindingLuar"
+>
+0
+</div>
+
+</div>
+
+<div class="result">
+
+<div class="label">
+Luas Dinding Kamar
+</div>
+
+<div
+class="value"
+id="hasilDindingKamar"
+>
+0
+</div>
+
+</div>
+
+<div class="result highlight">
+
+<div class="label">
+Total Luas Dinding
+</div>
+
+<div
+class="value"
+id="hasilTotalDinding"
+>
+0
+</div>
+
+</div>
+
+<div class="result">
+
+<div class="label">
+Luas Pintu + Jendela
+</div>
+
+<div
+class="value"
+id="hasilBukaan"
+>
+0
+</div>
+
+</div>
+
+<div class="result highlight">
+
+<div class="label">
+Luas Dinding Bersih
+</div>
+
+<div
+class="value"
+id="hasilBersih"
+>
+0
+</div>
+
+</div>
+
+<div class="result highlight">
+
+<div class="label">
+Kebutuhan Bata</div>
+
+<div
+class="value"
+id="hasilBata"
+>
+0
+</div>
+
+</div>
+
+<div class="result highlight">
+
+<div class="label">
+Bata + Cadangan
+</div>
+
+<div
+class="value"
+id="hasilBataCadangan"
+>
+0
+</div>
+
+</div>
+
+<div class="result">
+
+<div class="label">
+Semen
+</div>
+
+<div
+class="value"
+id="hasilSemen"
+>
+0
+</div>
+
+</div>
+
+<div class="result">
+
+<div class="label">
+Pasir
+</div>
+
+<div
+class="value"
+id="hasilPasir"
+>
+0
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<strong>Catatan:</strong>
+
+Perhitungan bata menggunakan nilai kebutuhan
+bata per m² yang dapat diubah sesuai ukuran bata.
+Dinding kamar dihitung berdasarkan ukuran masing-masing kamar.
+Kebutuhan semen dan pasir merupakan estimasi.
+
+</div>
+
+<div class="button-area">
+
+<button
+class="btn btn-secondary"
+onclick="resetSemua()"
+
+>
+
+🔄 Reset </button>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+Kalkulator Bangunan © 2026
+
+</div>
+
+</div>
+
+<script>
+
+/* ==========================================
+   DATA KAMAR
+========================================== */
+
+let daftarKamar = [];
+
+let nomorKamar = 0;
+
+
+/* ==========================================
+   TAMBAH KAMAR
+========================================== */
+
+function tambahKamar(
+    panjang = 3,
+    lebar = 3
+) {
+
+    nomorKamar++;
+
+    const id = nomorKamar;
+
+    daftarKamar.push({
+        id: id,
+        panjang: panjang,
+        lebar: lebar
+    });
+
+    tampilkanKamar();
+
+    hitung();
+
+}
+
+
+/* ==========================================
+   TAMPILKAN KAMAR
+========================================== */
+
+function tampilkanKamar() {
+
+    const container =
+        document.getElementById("kamarList");
+
+    container.innerHTML = "";
+
+    daftarKamar.forEach(function(kamar, index) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "kamar-item";
+
+        div.innerHTML = `
+
+            <strong>
+                Kamar ${index + 1}
+            </strong>
+
+            <div>
+
+                <label>
+                    Panjang (m)
+                </label>
+
+                <input
+                    type="number"
+                    value="${kamar.panjang}"
+                    min="0"
+                    step="0.01"
+                    onchange="ubahKamar(${kamar.id}, 'panjang', this.value)"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Lebar (m)
+                </label>
+
+                <input
+                    type="number"
+                    value="${kamar.lebar}"
+                    min="0"
+                    step="0.01"
+                    onchange="ubahKamar(${kamar.id}, 'lebar', this.value)"
+                >
+
+            </div>
+
+
+            <button
+                class="btn btn-danger"
+                onclick="hapusKamar(${kamar.id})"
+            >
+                ×
+            </button>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* ==========================================
+   UBAH KAMAR
+========================================== */
+
+function ubahKamar(id, field, value) {
+
+    const kamar =
+        daftarKamar.find(
+            item => item.id === id
+        );
+
+    if (kamar) {
+
+        kamar[field] =
+            parseFloat(value) || 0;
+
+    }
+
+    hitung();
+
+}
+
+
+/* ==========================================
+   HAPUS KAMAR
+========================================== */
+
+function hapusKamar(id) {
+
+    daftarKamar =
+        daftarKamar.filter(
+            kamar => kamar.id !== id
+        );
+
+    tampilkanKamar();
+
+    hitung();
+
+}
+
+
+/* ==========================================
+   ANGKA
+========================================== */
+
+function angka(id) {
+
+    const value =
+        parseFloat(
+            document.getElementById(id).value
+        );
+
+    return isNaN(value) ? 0 : value;
+
+}
+
+
+/* ==========================================
+   FORMAT
+========================================== */
+
+function formatAngka(value) {
+
+    return value.toLocaleString(
+        "id-ID",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+/* ==========================================
+   HITUNG
+========================================== */
+
+function hitung() {
+
+    /* -----------------------------
+       BANGUNAN
+    ----------------------------- */
+
+    const panjang =
+        angka("panjangBangunan");
+
+    const lebar =
+        angka("lebarBangunan");
+
+    const tinggi =
+        angka("tinggiBangunan");
+
+
+    const keliling =
+        2 * (panjang + lebar);
+
+
+    const luasDindingLuar =
+        keliling * tinggi;
+
+
+    /* -----------------------------
+       DINDING KAMAR
+    ----------------------------- */
+
+    let luasDindingKamar = 0;
+
+
+    daftarKamar.forEach(function(kamar) {
+
+        const kelilingKamar =
+            2 *
+            (kamar.panjang + kamar.lebar);
+
+
+        luasDindingKamar +=
+            kelilingKamar * tinggi;
+
+    });
+
+
+    /*
+       Karena setiap kamar dianggap
+       memiliki 4 sisi dinding,
+       dinding yang berbatasan antar
+       kamar akan terhitung dua kali.
+
+       Untuk estimasi sederhana,
+       kita gunakan 50% sebagai
+       faktor koreksi.
+    */
+
+    luasDindingKamar =
+        luasDindingKamar * 0.5;
+
+
+    /* -----------------------------
+       TOTAL DINDING
+    ----------------------------- */
+
+    const totalDinding =
+        luasDindingLuar +
+        luasDindingKamar;
+
+
+    /* -----------------------------
+       BUKAAN
+    ----------------------------- */
+
+    const jumlahPintu =
+        angka("jumlahPintu");
+
+    const luasPintu =
+        angka("luasPintu");
+
+
+    const jumlahJendela =
+        angka("jumlahJendela");
+
+    const luasJendela =
+        angka("luasJendela");
+
+
+    const totalBukaan =
+        (jumlahPintu * luasPintu) +
+        (jumlahJendela * luasJendela);
+
+
+    /* -----------------------------
+       LUAS BERSIH
+    ----------------------------- */
+
+    let luasBersih =
+        totalDinding -
+        totalBukaan;
+
+
+    if (luasBersih < 0) {
+
+        luasBersih = 0;
+
+    }
+
+
+    /* -----------------------------
+       BATA
+    ----------------------------- */
+
+    const bataPerM2 =
+        angka("bataPerM2");
+
+    const cadangan =
+        angka("cadangan");
+
+
+    const kebutuhanBata =
+        luasBersih *
+        bataPerM2;
+
+
+    const bataCadangan =
+        kebutuhanBata +
+        (
+            kebutuhanBata *
+            cadangan /
+            100
+        );
+
+
+    /* -----------------------------
+       SEMEN
+    ----------------------------- */
+
+    const semenPerM2 =
+        angka("semenPerM2");
+
+
+    const kebutuhanSemen =
+        luasBersih *
+        semenPerM2;
+
+
+    /* -----------------------------
+       PASIR
+    ----------------------------- */
+
+    const pasirPerM2 =
+        angka("pasirPerM2");
+
+
+    const kebutuhanPasir =
+        luasBersih *
+        pasirPerM2;
+
+
+    /* -----------------------------
+       TAMPILKAN
+    ----------------------------- */
+
+    document.getElementById(
+        "hasilDindingLuar"
+    ).textContent =
+        formatAngka(luasDindingLuar);
+
+
+    document.getElementById(
+        "hasilDindingKamar"
+    ).textContent =
+        formatAngka(luasDindingKamar);
+
+
+    document.getElementById(
+        "hasilTotalDinding"
+    ).textContent =
+        formatAngka(totalDinding);
+
+
+    document.getElementById(
+        "hasilBukaan"
+    ).textContent =
+        formatAngka(totalBukaan);
+
+
+    document.getElementById(
+        "hasilBersih"
+    ).textContent =
+        formatAngka(luasBersih);
+
+
+    document.getElementById(
+        "hasilBata"
+    ).textContent =
+        Math.ceil(kebutuhanBata)
+        .toLocaleString("id-ID");
+
+
+    document.getElementById(
+        "hasilBataCadangan"
+    ).textContent =
+        Math.ceil(bataCadangan)
+        .toLocaleString("id-ID");
+
+
+    document.getElementById(
+        "hasilSemen"
+    ).textContent =
+        formatAngka(kebutuhanSemen)
+        + " kg";
+
+
+    document.getElementById(
+        "hasilPasir"
+    ).textContent =
+        formatAngka(kebutuhanPasir)
+        + " m³";
+
+}
+
+
+/* ==========================================
+   INPUT OTOMATIS
+========================================== */
+
+document
+.querySelectorAll("input")
+.forEach(function(input) {
+
+    input.addEventListener(
+        "input",
+        hitung
+    );
+
+});
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+function resetSemua() {
+
+    document.getElementById(
+        "panjangBangunan"
+    ).value = 11;
+
+
+    document.getElementById(
+        "lebarBangunan"
+    ).value = 8;
+
+
+    document.getElementById(
+        "tinggiBangunan"
+    ).value = 4;
+
+
+    document.getElementById(
+        "bataPerM2"
+    ).value = 75;
+
+
+    document.getElementById(
+        "cadangan"
+    ).value = 10;
+
+
+    document.getElementById(
+        "jumlahPintu"
+    ).value = 1;
+
+
+    document.getElementById(
+        "luasPintu"
+    ).value = 1.89;
+
+
+    document.getElementById(
+        "jumlahJendela"
+    ).value = 2;
+
+
+    document.getElementById(
+        "luasJendela"
+    ).value = 1.44;
+
+
+    document.getElementById(
+        "semenPerM2"
+    ).value = 10;
+
+
+    document.getElementById(
+        "pasirPerM2"
+    ).value = 0.03;
+
+
+    daftarKamar = [];
+
+    nomorKamar = 0;
+
+
+    tampilkanKamar();
+
+    hitung();
+
+}
+
+
+/* ==========================================
+   KAMAR DEFAULT
+========================================== */
+
+tambahKamar(3, 3);
+tambahKamar(3, 3);
+tambahKamar(3, 3);
+
+</script>
+
+</body>
+</html>

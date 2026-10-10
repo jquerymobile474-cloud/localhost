@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Lokasi</title>
+
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- CSS Dashboard -->
+    <link rel="stylesheet" href="style-karyawan.css">
+    <!-- CSS -->
+    <style>
+   .page-title {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .card-master {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+        }
+
+        .card-master .card-header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 18px 20px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 13px;
+            font-weight: 600;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f8fbff;
+        }
+
+        .btn-action {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .badge-mandor {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+        }
+
+        .modal-header {
+            background: #0d6efd;
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 .2rem rgba(13,110,253,.15);
+        }
+
+        .empty-data {
+            padding: 40px 10px !important;
+            color: #6c757d;
+        }
+
+        .search-box {
+            max-width: 280px;
+        }
+
+/* =========================================
+   SIDEBAR
+========================================= */
+.sidebar {
+    width: 250px;
+    transition: width 0.3s ease;
+    z-index: 1000;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+
+
+/* =========================================
+   SIDEBAR COLLAPSED
+========================================= */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed ~ .main {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+
+/* =========================================
+   SIDEBAR HOVER
+========================================= */
+.sidebar.collapsed:hover {
+    width: 250px;
+}
+
+
+/* MAIN IKUT BERGESER SAAT SIDEBAR
+   COLLAPSED DI-HOVER
+========================================= */
+.sidebar.collapsed:hover ~ .main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+        @media (max-width: 768px) {
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+            .toolbar .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- =========================
+     NAVBAR
+========================= -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <!-- Toggle -->
+        <button class="toggle-btn btn btn-light d-flex align-items-center justify-content-center" id="toggleSidebar" type="button" title="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- User -->
+        <div class="dropdown ms-auto">
+
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="https://ui-avatars.com/api/?name=Administrator&background=0d6efd&color=fff"
+                    width="38" height="38" class="rounded-circle border border-white me-2" id="avatarUser" alt="User">
+                <div class="text-start">
+
+                    <div id="namaUser" class="fw-semibold">
+                        Administrator
+                    </div>
+
+                    <small id="levelUser">
+                        Admin
+                    </small>
+
+                </div>
+
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-person me-2"></i>
+                        Profil
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <a class="dropdown-item text-danger"
+                        href="#" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <ul class="nav flex-column p-2">
+
+        <!-- DASHBOARD -->
+        <li class="nav-item">
+            <a href="dashboard.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <small class="text-secondary px-3 menu-title">
+                MASTER DATA
+            </small>
+        </li>
+        <li class="nav-item menu-admin">
+            <a href="master-karyawan.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Karyawan">
+                <i class="bi bi-people"></i>
+                <span>Karyawan</span>
+            </a>
+        </li>	
+
+        <li class="nav-item menu-admin">
+            <a href="master-user.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master User">
+                <i class="bi bi-person-gear"></i>
+                <span>User</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-anggota.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Anggota">
+                <i class="bi bi-person-gear"></i>
+                <span>Anggota</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-buku.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Buku">
+                <i class="bi bi-book"></i>
+                <span>Buku</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-mandor.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Mandor">
+                <i class="bi bi-people"></i>
+                <span>Mandor</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="lokasi.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Lokasi">
+                <i class="bi bi-geo-alt"></i>
+                <span>Lokasi</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="aktivitas.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Aktivitas">
+                <i class="bi bi-list-check"></i>
+                <span>Aktivitas</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                TRANSAKSI
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="peminjaman.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Peminjaman">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="pengembalian.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Pengembalian">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Pengembalian</span>
+            </a>
+        </li>
+
+	<li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                LAPORAN
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Pinjam">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Lap.Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Kembali">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Lap.Pengembalian</span>
+            </a>
+        </li>
+
+
+    </ul>
+</aside>
+
+
+    <!-- MAIN -->
+    <main class="main" id="main">
+
+<!--PAGE HEADER-->
+            <div class="m4">
+
+                <h4 class="page-title mb-1">
+                    <!--<i class="bi bi-people me-2 text-primary"></1>-->
+			Master Aktivitas</h4>
+                     <div class="page-subtitle">
+            		Kelola data aktivitas.
+        	      </div>
+                </div>
+
+<!-- =========================
+         CARD TABLE
+    ========================= -->
+
+    <div class="card card-master">
+
+        <!-- CARD HEADER -->
+
+        <div class="card-header">
+
+            <div  class="toolbar d-flex justify-content-between align-items-center gap-3">
+
+                <!-- Search -->
+
+                <div class="input-group search-box">
+
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+
+                    <input type="text" class="form-control" id="searchAktivitas" placeholder="Cari aktivitas...">
+
+                </div>
+
+		<!-- Button -->
+	     <div class="mb-2">
+                    <button type="button" class="btn btn-success" id="btnUploadExcel">
+                        <i class="bi bi-file-earmark-excel"></i>
+                        Upload Excel
+                    </button>
+
+                    <input type="file" id="inputExcel" accept=".xlsx,.xls" style="display:none;">
+
+                    <button type="button" class="btn btn-primary" id="btnTambah">
+                        <i class="bi bi-plus-lg"></i>
+                        Tambah Aktivitas
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARD -->          
+                <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+                                <th width="60">No</th>
+                                <th>Kode Aktivitas</th>
+                                <th>Aktivitas</th>
+                                <th>Lokasi</th>
+                                <th>HA</th>
+                                <th>Keterangan</th>
+                                <th width="140">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyLokasi"> 
+				<!-- Data lokasi akan ditampilkan oleh JavaScript -->
+			</tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- MODAL TAMBAH -->
+<div class="modal fade" id="modalLokasi" tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    <i class="bi bi-geo-alt"></i>
+                    Tambah Lokasi
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formLokasi">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Kode Aktivitas
+                            </label>
+                            <input type="text" class="form-control" id="kodeAktivitas" placeholder="Contoh: AKT001">
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Aktivitas
+                            </label>
+                            <input type="text" class="form-control" id="aktivitas" placeholder="Nama aktivitas">
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Lokasi
+                            </label>
+                            <input type="text" class="form-control" id="lokasi" placeholder="Nama lokasi">
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                HA
+                            </label>
+                            <input type="number" class="form-control" id="ha" placeholder="0">
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+ 			<label class="form-label">
+ 				Keterangan 
+			</label> 
+				<select class="form-select" id="action">
+ 					<option value="Aktif">Aktif</option> 
+					<option value="Off">Off</option> 
+					<option value="Batal">Batal</option>
+ 					<option value="Taksasi">Taksasi</option>
+ 				</select> 
+			</div>
+
+
+
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Batal
+                </button>
+
+                <button type="button" class="btn btn-primary" id="btnSimpan">
+                    <i class="bi bi-save"></i>
+                    Simpan
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<!-- JavaScript -->
+<script>
+/* =====================================================
+   CEK LOGIN
+===================================================== */
+
+// Aktifkan bagian ini jika dashboard
+// harus hanya bisa dibuka setelah login.
+
+if (sessionStorage.getItem("login") !== "true") {
+
+    window.location.href = "index.html";
+
+}
+// ======================================================
+// MASTER DATA LOKASI
+// localStorage + Upload Excel
+// HTML TIDAK PERLU DIUBAH
+// ======================================================
+
+const STORAGE_KEY = "dataLokasi";
+
+
+// ======================================================
+// ELEMENT HTML
+// ======================================================
+
+const sidebar = document.getElementById("sidebar");
+const toggleSidebar = document.getElementById("toggleSidebar");
+
+const btnTambah = document.getElementById("btnTambah");
+const btnSimpan = document.getElementById("btnSimpan");
+
+const modalElement = document.getElementById("modalLokasi");
+const formLokasi = document.getElementById("formLokasi");
+
+const tbodyLokasi = document.getElementById("tbodyLokasi");
+const searchLokasi = document.getElementById("searchLokasi");
+
+const btnUploadExcel = document.getElementById("btnUploadExcel");
+const inputExcel = document.getElementById("inputExcel");
+
+
+// ======================================================
+// VARIABLE
+// ======================================================
+
+let indexEdit = null;
+let modalLokasi = null;
+
+
+// ======================================================
+// SAAT HALAMAN SELESAI DIMUAT
+// ======================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("Master Lokasi berhasil dimuat.");
+
+    // Tampilkan data
+    tampilkanData();
+
+
+    // ==================================================
+    // BOOTSTRAP MODAL
+    // ==================================================
+
+    if (modalElement && typeof bootstrap !== "undefined") {
+
+        modalLokasi = new bootstrap.Modal(modalElement);
+
+    } else {
+
+        console.error("Bootstrap Modal tidak ditemukan.");
+
+    }
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutBtn.addEventListener(
+    "click",
+    function(e) {
+
+        e.preventDefault();
+
+
+        sessionStorage.clear();
+
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+    // ==================================================
+    // SIDEBAR
+    // ==================================================
+
+    if (toggleSidebar && sidebar) {
+
+        toggleSidebar.addEventListener("click", function () {
+
+            sidebar.classList.toggle("collapsed");
+
+        });
+
+    }
+
+
+    // ==================================================
+    // TOMBOL TAMBAH
+    // ==================================================
+
+    if (btnTambah) {
+
+        btnTambah.addEventListener("click", function () {
+
+            modeTambah();
+
+        });
+
+    }
+
+
+    // ==================================================
+    // TOMBOL SIMPAN
+    // ==================================================
+
+    if (btnSimpan) {
+
+        btnSimpan.addEventListener("click", function () {
+
+            simpanData();
+
+        });
+
+    }
+
+
+    // ==================================================
+    // SEARCH
+    // ==================================================
+
+    if (searchLokasi) {
+
+        searchLokasi.addEventListener("input", function () {
+
+            filterData(this.value);
+
+        });
+
+    }
+
+
+    // ==================================================
+    // UPLOAD EXCEL
+    // ==================================================
+
+    if (btnUploadExcel && inputExcel) {
+
+        btnUploadExcel.addEventListener("click", function () {
+
+            inputExcel.click();
+
+        });
+
+
+        inputExcel.addEventListener("change", function (event) {
+
+            const file = event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            bacaFileExcel(file);
+
+            // supaya file yang sama bisa dipilih lagi
+            inputExcel.value = "";
+
+        });
+
+    }
+
+
+    // ==================================================
+    // EVENT UBAH / HAPUS
+    // ==================================================
+
+    if (tbodyLokasi) {
+
+        tbodyLokasi.addEventListener("click", function (event) {
+
+            const btnUbah =
+                event.target.closest(".btn-ubah");
+
+            if (btnUbah) {
+
+                const index =
+                    Number(btnUbah.dataset.index);
+
+                bukaModeUbah(index);
+
+                return;
+
+            }
+
+
+            const btnHapus =
+                event.target.closest(".btn-hapus");
+
+            if (btnHapus) {
+
+                const index =
+                    Number(btnHapus.dataset.index);
+
+                hapusData(index);
+
+                return;
+
+            }
+
+        });
+
+    }
+
+
+    // ==================================================
+    // EVENT MODAL DITUTUP
+    // ==================================================
+
+    if (modalElement) {
+
+        modalElement.addEventListener(
+            "hidden.bs.modal",
+            function () {
+
+                resetModal();
+
+            }
+        );
+
+    }
+
+});
+
+
+// ======================================================
+// MODE TAMBAH
+// ======================================================
+
+function modeTambah() {
+
+    indexEdit = null;
+
+
+    if (formLokasi) {
+
+        formLokasi.reset();
+
+    }
+
+
+    const modalTitle =
+        modalElement
+            ? modalElement.querySelector(".modal-title")
+            : null;
+
+
+    if (modalTitle) {
+
+        modalTitle.innerHTML = `
+            <i class="bi bi-geo-alt"></i>
+            Tambah Lokasi
+        `;
+
+    }
+
+
+    if (btnSimpan) {
+
+        btnSimpan.innerHTML = `
+            <i class="bi bi-save"></i>
+            Simpan
+        `;
+
+    }
+
+
+    const action =
+        document.getElementById("action");
+
+
+    if (action) {
+
+        action.value = "Aktif";
+
+    }
+
+
+    if (modalLokasi) {
+
+        modalLokasi.show();
+
+    } else {
+
+        console.error("Modal Lokasi belum tersedia.");
+
+    }
+
+}
+
+
+// ======================================================
+// SIMPAN DATA
+// ======================================================
+
+function simpanData() {
+
+    const kodeElement =
+        document.getElementById("kodeAktivitas");
+
+    const aktivitasElement =
+        document.getElementById("aktivitas");
+
+    const lokasiElement =
+        document.getElementById("lokasi");
+
+    const haElement =
+        document.getElementById("ha");
+
+    const actionElement =
+        document.getElementById("action");
+
+
+    if (
+        !kodeElement ||
+        !aktivitasElement ||
+        !lokasiElement ||
+        !haElement ||
+        !actionElement
+    ) {
+
+        console.error(
+            "Ada element form yang tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    const kodeAktivitas =
+        kodeElement.value.trim();
+
+    const aktivitas =
+        aktivitasElement.value.trim();
+
+    const lokasi =
+        lokasiElement.value.trim();
+
+    const ha =
+        haElement.value.trim();
+
+    const keterangan =
+        actionElement.value;
+
+
+    // ==================================================
+    // VALIDASI
+    // ==================================================
+
+    if (kodeAktivitas === "") {
+
+        alert("Kode aktivitas wajib diisi.");
+
+        kodeElement.focus();
+
+        return;
+
+    }
+
+
+    if (aktivitas === "") {
+
+        alert("Aktivitas wajib diisi.");
+
+        aktivitasElement.focus();
+
+        return;
+
+    }
+
+
+    if (lokasi === "") {
+
+        alert("Lokasi wajib diisi.");
+
+        lokasiElement.focus();
+
+        return;
+
+    }
+
+
+    if (ha === "") {
+
+        alert("HA wajib diisi.");
+
+        haElement.focus();
+
+        return;
+
+    }
+
+
+    let dataLokasi = ambilData();
+
+
+    // ==================================================
+    // MODE UBAH
+    // ==================================================
+
+    if (indexEdit !== null) {
+
+        if (!dataLokasi[indexEdit]) {
+
+            alert("Data yang akan diubah tidak ditemukan.");
+
+            return;
+
+        }
+
+
+        dataLokasi[indexEdit] = {
+
+            kodeAktivitas: kodeAktivitas,
+
+            aktivitas: aktivitas,
+
+            lokasi: lokasi,
+
+            ha: ha,
+
+            keterangan: keterangan
+
+        };
+
+
+        simpanKeLocalStorage(dataLokasi);
+
+        alert("Data lokasi berhasil diperbarui.");
+
+    }
+
+
+    // ==================================================
+    // MODE TAMBAH
+    // ==================================================
+
+    else {
+
+        dataLokasi.push({
+
+            kodeAktivitas: kodeAktivitas,
+
+            aktivitas: aktivitas,
+
+            lokasi: lokasi,
+
+            ha: ha,
+
+            keterangan: keterangan
+
+        });
+
+
+        simpanKeLocalStorage(dataLokasi);
+
+        alert("Data lokasi berhasil ditambahkan.");
+
+    }
+
+
+    // Refresh tabel
+    tampilkanData();
+
+
+    indexEdit = null;
+
+
+    if (formLokasi) {
+
+        formLokasi.reset();
+
+    }
+
+
+    if (modalLokasi) {
+
+        modalLokasi.hide();
+
+    }
+
+}
+
+
+// ======================================================
+// AMBIL DATA LOCAL STORAGE
+// ======================================================
+
+function ambilData() {
+
+    const data =
+        localStorage.getItem(STORAGE_KEY);
+
+
+    if (!data) {
+
+        return [];
+
+    }
+
+
+    try {
+
+        const hasil =
+            JSON.parse(data);
+
+
+        if (Array.isArray(hasil)) {
+
+            return hasil;
+
+        }
+
+
+        return [];
+
+    } catch (error) {
+
+        console.error(
+            "Data localStorage rusak:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+// ======================================================
+// SIMPAN LOCAL STORAGE
+// ======================================================
+
+function simpanKeLocalStorage(data) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+// ======================================================
+// TAMPILKAN DATA
+// ======================================================
+
+function tampilkanData() {
+
+    if (!tbodyLokasi) {
+
+        console.error(
+            "tbodyLokasi tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    const dataLokasi =
+        ambilData();
+
+
+    tbodyLokasi.innerHTML = "";
+
+
+    if (dataLokasi.length === 0) {
+
+        tbodyLokasi.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    class="text-center text-muted py-4">
+
+                    <i class="bi bi-inbox"></i>
+
+                    <br>
+
+                    Belum ada data lokasi.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    dataLokasi.forEach(function (data, index) {
+
+        const row =
+            tbodyLokasi.insertRow();
+
+
+        const statusClass =
+            getStatusClass(data.keterangan);
+
+
+        row.innerHTML = `
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>                ${escapeHTML(data.kodeAktivitas || "")}            </td>
+            <td>                ${escapeHTML(data.aktivitas || "")}            </td>
+            <td>                ${escapeHTML(data.lokasi || "")}            </td>
+            <td>                ${escapeHTML(data.ha || "")}            </td>
+            <td>                <span class="status-badge ${statusClass}">
+                    ${escapeHTML(data.keterangan || "Aktif")}
+                </span>
+            </td>
+
+    <div class="d-flex flex-nowrap justify-content-center align-items-center gap-1">
+
+        <button type="button" class="btn btn-sm btn-warning btn-ubah" data-index="${index}">
+            <i class="bi bi-pencil-square"></i>
+            Ubah
+        </button>
+        <button type="button" class="btn btn-sm btn-danger btn-hapus" data-index="${index}">
+            <i class="bi bi-trash"></i>
+            Hapus
+        </button>
+    </div>
+        `;
+    });
+}
+
+
+// ======================================================
+// MODE UBAH
+// ======================================================
+
+function bukaModeUbah(index) {
+
+    const dataLokasi =
+        ambilData();
+
+
+    if (!dataLokasi[index]) {
+
+        alert("Data tidak ditemukan.");
+
+        return;
+
+    }
+
+
+    const data =
+        dataLokasi[index];
+
+
+    indexEdit = index;
+
+
+    const kodeElement =
+        document.getElementById("kodeAktivitas");
+
+    const aktivitasElement =
+        document.getElementById("aktivitas");
+
+    const lokasiElement =
+        document.getElementById("lokasi");
+
+    const haElement =
+        document.getElementById("ha");
+
+    const actionElement =
+        document.getElementById("action");
+
+
+    if (kodeElement) {
+
+        kodeElement.value =
+            data.kodeAktivitas || "";
+
+    }
+
+
+    if (aktivitasElement) {
+
+        aktivitasElement.value =
+            data.aktivitas || "";
+
+    }
+
+
+    if (lokasiElement) {
+
+        lokasiElement.value =
+            data.lokasi || "";
+
+    }
+
+
+    if (haElement) {
+
+        haElement.value =
+            data.ha || "";
+
+    }
+
+
+    if (actionElement) {
+
+        actionElement.value =
+            data.keterangan || "Aktif";
+
+    }
+
+
+    const modalTitle =
+        modalElement
+            ? modalElement.querySelector(".modal-title")
+            : null;
+
+
+    if (modalTitle) {
+
+        modalTitle.innerHTML = `
+            <i class="bi bi-pencil-square"></i>
+            Ubah Lokasi
+        `;
+
+    }
+
+
+    if (btnSimpan) {
+
+        btnSimpan.innerHTML = `
+            <i class="bi bi-save"></i>
+            Update
+        `;
+
+    }
+
+
+    if (modalLokasi) {
+
+        modalLokasi.show();
+
+    }
+
+}
+
+
+// ======================================================
+// HAPUS DATA
+// ======================================================
+
+function hapusData(index) {
+
+    const dataLokasi =
+        ambilData();
+
+
+    if (!dataLokasi[index]) {
+
+        return;
+
+    }
+
+
+    const data =
+        dataLokasi[index];
+
+
+    const yakin =
+        confirm(
+
+            "Apakah Anda yakin ingin menghapus data ini?\n\n" +
+
+            "Kode Aktivitas : " +
+            data.kodeAktivitas +
+
+            "\nAktivitas : " +
+            data.aktivitas +
+
+            "\nLokasi : " +
+            data.lokasi
+
+        );
+
+
+    if (!yakin) {
+
+        return;
+
+    }
+
+
+    dataLokasi.splice(index, 1);
+
+
+    simpanKeLocalStorage(dataLokasi);
+
+
+    tampilkanData();
+
+
+    alert("Data lokasi berhasil dihapus.");
+
+}
+
+
+// ======================================================
+// SEARCH
+// ======================================================
+
+function filterData(keyword) {
+
+    if (!tbodyLokasi) {
+
+        return;
+
+    }
+
+
+    keyword =
+        String(keyword || "")
+            .toLowerCase()
+            .trim();
+
+
+    const rows =
+        tbodyLokasi.querySelectorAll("tr");
+
+
+    rows.forEach(function (row) {
+
+        const text =
+            row.textContent
+                .toLowerCase();
+
+
+        row.style.display =
+            text.includes(keyword)
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+// ======================================================
+// UPLOAD EXCEL
+// ======================================================
+
+function bacaFileExcel(file) {
+
+    if (typeof XLSX === "undefined") {
+
+        alert(
+            "Library Excel belum tersedia.\n" +
+            "Pastikan XLSX sudah dimuat."
+        );
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function (event) {
+
+        try {
+
+            const data =
+                new Uint8Array(
+                    event.target.result
+                );
+
+
+            const workbook =
+                XLSX.read(
+                    data,
+                    {
+                        type: "array"
+                    }
+                );
+
+
+            const namaSheet =
+                workbook.SheetNames[0];
+
+
+            if (!namaSheet) {
+
+                alert(
+                    "Sheet Excel tidak ditemukan."
+                );
+
+                return;
+
+            }
+
+
+            const worksheet =
+                workbook.Sheets[namaSheet];
+
+
+            const rows =
+                XLSX.utils.sheet_to_json(
+                    worksheet,
+                    {
+                        defval: ""
+                    }
+                );
+
+
+            prosesDataExcel(rows);
+
+        } catch (error) {
+
+            console.error(
+                "Error membaca Excel:",
+                error
+            );
+
+
+            alert(
+                "File Excel tidak dapat dibaca."
+            );
+
+        }
+
+    };
+
+
+    reader.onerror = function () {
+
+        alert(
+            "Gagal membaca file Excel."
+        );
+
+    };
+
+
+    reader.readAsArrayBuffer(file);
+
+}
+
+
+// ======================================================
+// PROSES DATA EXCEL
+// ======================================================
+
+function prosesDataExcel(rows) {
+
+    if (!rows || rows.length === 0) {
+
+        alert(
+            "File Excel tidak memiliki data."
+        );
+
+        return;
+
+    }
+
+
+    let dataLokasi =
+        ambilData();
+
+
+    let jumlahBerhasil = 0;
+    let jumlahDuplikat = 0;
+    let jumlahGagal = 0;
+
+
+    rows.forEach(function (row) {
+
+        const kodeAktivitas =
+            ambilKolom(
+                row,
+                [
+                    "Kode Aktivitas",
+                    "kode aktivitas",
+                    "kode_aktivitas",
+                    "KodeAktivitas"
+                ]
+            );
+
+
+        const aktivitas =
+            ambilKolom(
+                row,
+                [
+                    "Aktivitas",
+                    "aktivitas"
+                ]
+            );
+
+
+        const lokasi =
+            ambilKolom(
+                row,
+                [
+                    "Lokasi",
+                    "lokasi"
+                ]
+            );
+
+
+        const ha =
+            ambilKolom(
+                row,
+                [
+                    "HA",
+                    "ha"
+                ]
+            );
+
+
+        const keterangan =
+            ambilKolom(
+                row,
+                [
+                    "Keterangan",
+                    "keterangan",
+                    "Action",
+                    "action"
+                ]
+            );
+
+
+        // ==============================================
+        // VALIDASI DATA UTAMA
+        // ==============================================
+
+        if (
+            kodeAktivitas === "" ||
+            aktivitas === "" ||
+            lokasi === ""
+        ) {
+
+            jumlahGagal++;
+
+            return;
+
+        }
+
+
+        const status =
+            normalisasiStatus(keterangan) || "Aktif";
+
+
+        // ==============================================
+        // DUPLIKAT
+        //
+        // Kode Aktivitas SAMA tetapi Lokasi BERBEDA
+        // tetap boleh.
+        //
+        // Yang dianggap duplikat:
+        // Kode Aktivitas + Lokasi
+        // ==============================================
+
+        const sudahAda =
+            dataLokasi.some(function (item) {
+
+                const kodeLama =
+                    String(
+                        item.kodeAktivitas || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const lokasiLama =
+                    String(
+                        item.lokasi || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                return (
+                    kodeLama ===
+                    kodeAktivitas
+                        .trim()
+                        .toLowerCase()
+
+                    &&
+
+                    lokasiLama ===
+                    lokasi
+                        .trim()
+                        .toLowerCase()
+                );
+
+            });
+
+
+        if (sudahAda) {
+
+            jumlahDuplikat++;
+
+            return;
+
+        }
+
+
+        // ==============================================
+        // MASUKKAN DATA
+        // ==============================================
+
+        dataLokasi.push({
+
+            kodeAktivitas:
+                kodeAktivitas,
+
+            aktivitas:
+                aktivitas,
+
+            lokasi:
+                lokasi,
+
+            ha:
+                ha,
+
+            keterangan:
+                status
+
+        });
+
+
+        jumlahBerhasil++;
+
+    });
+
+
+    // Simpan
+    simpanKeLocalStorage(dataLokasi);
+
+
+    // Refresh tabel
+    tampilkanData();
+
+
+    // ==============================================
+    // HASIL UPLOAD
+    // ==============================================
+
+    alert(
+
+        "Upload Excel selesai.\n\n" +
+
+        "Total data Excel : " +
+        rows.length +
+
+        "\nBerhasil masuk : " +
+        jumlahBerhasil +
+
+        "\nDuplikat : " +
+        jumlahDuplikat +
+
+        "\nData tidak lengkap : " +
+        jumlahGagal +
+
+        "\n\nTotal data sekarang : " +
+        dataLokasi.length
+
+    );
+
+}
+
+
+// ======================================================
+// AMBIL KOLOM EXCEL
+// ======================================================
+
+function ambilKolom(row, namaKolom) {
+
+    for (
+        let i = 0;
+        i < namaKolom.length;
+        i++
+    ) {
+
+        const nama =
+            namaKolom[i];
+
+
+        if (
+            row[nama] !== undefined &&
+            row[nama] !== null
+        ) {
+
+            return String(
+                row[nama]
+            ).trim();
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+// ======================================================
+// NORMALISASI STATUS
+// ======================================================
+
+function normalisasiStatus(status) {
+
+    if (!status) {
+
+        return "";
+
+    }
+
+
+    const value =
+        String(status)
+            .trim()
+            .toLowerCase();
+
+
+    if (value === "aktif") {
+
+        return "Aktif";
+
+    }
+
+
+    if (
+        value === "off" ||
+        value === "nonaktif" ||
+        value === "non aktif"
+    ) {
+
+        return "Off";
+
+    }
+
+
+    if (value === "batal") {
+
+        return "Batal";
+
+    }
+
+
+    if (value === "taksasi") {
+
+        return "Taksasi";
+
+    }
+
+
+    return "";
+
+}
+
+
+// ======================================================
+// STATUS CLASS
+// ======================================================
+
+function getStatusClass(status) {
+
+    switch (status) {
+
+        case "Aktif":
+            return "status-aktif";
+
+        case "Off":
+            return "status-off";
+
+        case "Batal":
+            return "status-batal";
+
+        case "Taksasi":
+            return "status-taksasi";
+
+        default:
+            return "status-aktif";
+
+    }
+
+}
+
+
+// ======================================================
+// RESET MODAL
+// ======================================================
+
+function resetModal() {
+
+    indexEdit = null;
+
+
+    if (formLokasi) {
+
+        formLokasi.reset();
+
+    }
+
+
+    const modalTitle =
+        modalElement
+            ? modalElement.querySelector(".modal-title")
+            : null;
+
+
+    if (modalTitle) {
+
+        modalTitle.innerHTML = `
+            <i class="bi bi-geo-alt"></i>
+            Tambah Lokasi
+        `;
+
+    }
+
+
+    if (btnSimpan) {
+
+        btnSimpan.innerHTML = `
+            <i class="bi bi-save"></i>
+            Simpan
+        `;
+
+    }
+
+
+    const action =
+        document.getElementById("action");
+
+
+    if (action) {
+
+        action.value = "Aktif";
+
+    }
+
+}
+
+
+// ======================================================
+// ESCAPE HTML
+// ======================================================
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+</script>
+
+</body>
+</html>
+

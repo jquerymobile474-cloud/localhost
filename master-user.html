@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master User</title>
+
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS Dashboard -->
+    <link rel="stylesheet" href="master-user.css">
+    <link rel="stylesheet" href="style-karyawan.css">
+
+    <style>
+     .page-title {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .card-master {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+        }
+
+        .card-master .card-header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 18px 20px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 13px;
+            font-weight: 600;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f8fbff;
+        }
+
+        .btn-action {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .badge-mandor {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.15);
+        }
+
+        .modal-header {
+            background: #0d6efd;
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 .2rem rgba(13,110,253,.15);
+        }
+
+        .empty-data {
+            padding: 40px 10px !important;
+            color: #6c757d;
+        }
+
+        .search-box {
+            max-width: 280px;
+        }
+
+        @media (max-width: 768px) {
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+            .toolbar .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- =========================
+     NAVBAR
+========================= -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <!-- Toggle -->
+        <button class="toggle-btn btn btn-light d-flex align-items-center justify-content-center" id="toggleSidebar" type="button" title="Toggle Sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- User -->
+        <div class="dropdown ms-auto">
+
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <img src="https://ui-avatars.com/api/?name=Administrator&background=0d6efd&color=fff"
+                    width="38" height="38" class="rounded-circle border border-white me-2" id="avatarUser" alt="User">
+                <div class="text-start">
+
+                    <div id="namaUser" class="fw-semibold">
+                        Administrator
+                    </div>
+
+                    <small id="levelUser">
+                        Admin
+                    </small>
+
+                </div>
+
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-person me-2"></i>
+                        Profil
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <a class="dropdown-item text-danger"
+                        href="#" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+
+
+    <!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <ul class="nav flex-column p-2">
+
+        <!-- DASHBOARD -->
+        <li class="nav-item">
+            <a href="dashboard.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-2">
+            <small class="text-secondary px-3 menu-title">
+                MASTER DATA
+            </small>
+        </li>
+        <li class="nav-item menu-admin">
+            <a href="master-karyawan.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Karyawan">
+                <i class="bi bi-people"></i>
+                <span>Karyawan</span>
+            </a>
+        </li>	
+
+        <li class="nav-item menu-admin">
+            <a href="master-user.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master User">
+                <i class="bi bi-person-gear"></i>
+                <span>User</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-anggota.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Anggota">
+                <i class="bi bi-person-gear"></i>
+                <span>Anggota</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-buku.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Buku">
+                <i class="bi bi-book"></i>
+                <span>Buku</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="master-mandor.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Mandor">
+                <i class="bi bi-people"></i>
+                <span>Mandor</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="lokasi.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Lokasi">
+                <i class="bi bi-geo-alt"></i>
+                <span>Lokasi</span>
+            </a>
+        </li>
+
+	<li class="nav-item menu-admin">
+            <a href="aktivitas.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Master Aktivitas">
+                <i class="bi bi-list-check"></i>
+                <span>Aktivitas</span>
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                TRANSAKSI
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="peminjaman.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Peminjaman">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="pengembalian.html" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Data Pengembalian">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Pengembalian</span>
+            </a>
+        </li>
+
+	<li class="nav-item mt-3">
+            <small class="text-secondary px-3 menu-title">
+                LAPORAN
+            </small>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Pinjam">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Lap.Peminjaman</span>
+            </a>
+        </li>
+
+	<li class="nav-item">
+            <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Lap Kembali">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Lap.Pengembalian</span>
+            </a>
+        </li>
+
+
+    </ul>
+</aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main        class="main"        id="main"    >
+
+        <div class="container-fluid">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="mb-4">
+
+                <h4 class="page-title mb-1">
+                    Master User
+                </h4>
+
+                <p class="page-subtitle mb-0">
+                    Kelola pengguna sistem dan hak akses
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATISTIK
+            ================================================== -->
+
+            <div class="row g-3 mb-4">
+
+
+                <!-- TOTAL USER -->
+
+                <div class="col-xl-4 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Total User
+                            </div>
+
+                            <div                                class="stat-value"                                id="totalUser"                            >
+                                0
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADMIN -->
+
+                <div class="col-xl-4 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Administrator
+                            </div>
+
+                            <div                                class="stat-value"                                id="totalAdmin"                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon admin-icon">
+
+                            <i class="bi bi-person-gear"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OPERATOR -->
+
+                <div class="col-xl-4 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Operator
+                            </div>
+
+                            <div                                class="stat-value"                                id="totalOperator"                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon operator-icon">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CARD MASTER USER
+            ================================================== -->
+
+            <div class="card card-master">
+
+
+                <!-- HEADER -->
+
+                <div class="card-header">
+
+                    <div                        class="toolbar d-flex justify-content-between align-items-center gap-3"                    >
+
+
+                        <!-- SEARCH -->
+
+                        <div class="search-box">
+
+                            <div class="input-group">
+
+                                <span class="input-group-text bg-white">
+
+                                    <i class="bi bi-search"></i>
+
+                                </span>
+
+
+                                <input   type="text"  class="form-control"   id="searchUser" placeholder="Cari username atau nama...">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TAMBAH -->
+
+                        <button                            type="button"                            class="btn btn-primary"                            id="btnTambah"                        >
+
+                            <i class="bi bi-plus-lg me-1"></i>
+
+                            Tambah User
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover mb-0">
+
+                        <thead>
+
+                            <tr>
+
+                                <th width="60" class="text-center" >
+                                    No
+                                </th>
+
+                                <th>
+                                    Username
+                                </th>
+
+                                <th>
+                                    Nama
+                                </th>
+
+                                <th>
+                                    Password
+                                </th>
+
+                                <th>
+                                    Level
+                                </th>
+
+                                <th width="130" class="text-center">
+                                    Aksi
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tbodyUser">
+
+                            <tr>
+
+                                <td  colspan="6" class="text-center empty-data">
+
+                                    <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+
+                                    Belum ada data user
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         MODAL USER
+    ====================================================== -->
+    <div class="modal fade" id="modalUser" tabindex="-1" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+
+                <!-- HEADER -->
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="modalTitle">
+                        Tambah User
+                    </h5>
+
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+
+                </div>
+
+
+<form id="formUser">
+
+    <div class="modal-body">
+
+        <!-- USERNAME -->
+        <div class="mb-3">
+            <label for="username" class="form-label">
+                Username
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Masukkan username"
+                autocomplete="off"
+                required
+            >
+        </div>
+
+
+        <!-- NAMA -->
+        <div class="mb-3">
+            <label for="nama" class="form-label">
+                Nama
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                id="nama"
+                placeholder="Masukkan nama"
+                autocomplete="off"
+                required
+            >
+        </div>
+
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+            <label for="password" class="form-label">
+                Password
+            </label>
+
+            <div class="input-group">
+
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Masukkan password"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    id="togglePassword"
+                    title="Tampilkan password"
+                >
+                    <i class="bi bi-eye"></i>
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- LEVEL -->
+        <div class="mb-3">
+            <label for="level" class="form-label">
+                Level
+            </label>
+
+            <select
+                class="form-select"
+                id="level"
+                required
+            >
+                <option value="">
+                    Pilih Level
+                </option>
+
+                <option value="Admin">
+                    Admin
+                </option>
+
+                <option value="User">
+                    USer
+                </option>
+            </select>
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+
+        <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+        >
+            Batal
+        </button>
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            <i class="bi bi-save me-1"></i>
+            Simpan
+        </button>
+
+    </div>
+
+</form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer
+        class="footer"
+        id="footer"
+    >
+
+        © 2026 Sistem Informasi
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         BOOTSTRAP JS
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- =====================================================
+         MASTER USER JS
+    ====================================================== -->
+
+    <script>
+/* =====================================================
+   CEK LOGIN
+===================================================== */
+
+// Aktifkan bagian ini jika dashboard
+// harus hanya bisa dibuka setelah login.
+
+
+if (sessionStorage.getItem("login") !== "true") {
+
+    window.location.href = "index.html";
+
+}
+
+
+/* =====================================================
+   MASTER USER
+===================================================== */
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const main =
+    document.getElementById("main");
+
+const toggle =
+    document.getElementById("toggleSidebar");
+
+const footer =
+    document.getElementById("footer");
+
+const namaUser =
+    document.getElementById("namaUser");
+
+const levelUser =
+    document.getElementById("levelUser");
+
+const avatarUser =
+    document.getElementById("avatarUser");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const tbodyUser =
+    document.getElementById("tbodyUser");
+
+const searchUser =
+    document.getElementById("searchUser");
+
+const btnTambah =
+    document.getElementById("btnTambah");
+
+const formUser =
+    document.getElementById("formUser");
+
+const modalElement =
+    document.getElementById("modalUser");
+
+const modalUser =
+    new bootstrap.Modal(modalElement);
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const totalUser =
+    document.getElementById("totalUser");
+
+const totalAdmin =
+    document.getElementById("totalAdmin");
+
+const totalOperator =
+    document.getElementById("totalOperator");
+
+const togglePassword =
+    document.getElementById("togglePassword");
+
+const passwordInput =
+    document.getElementById("password");
+
+
+/* =====================================================
+   USER LOGIN
+===================================================== */
+
+const nama =
+    sessionStorage.getItem("nama") ||
+    "Administrator";
+
+const level =
+    sessionStorage.getItem("level") ||
+    "Admin";
+
+
+namaUser.textContent =
+    nama;
+
+levelUser.textContent =
+    level;
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+avatarUser.src =
+    "https://ui-avatars.com/api/?name=" +
+    encodeURIComponent(nama) +
+    "&background=0d6efd&color=fff";
+
+
+/* =====================================================
+   SIDEBAR STATE
+===================================================== */
+
+function setSidebarState() {
+
+    const status =
+        localStorage.getItem("sidebar");
+
+
+    if (status === "close") {
+
+        sidebar.classList.add("collapsed");
+
+        main.classList.add("expand");
+
+
+        if (footer) {
+
+            footer.classList.add("expand");
+
+        }
+
+    } else {
+
+        sidebar.classList.remove("collapsed");
+
+        main.classList.remove("expand");
+
+
+        if (footer) {
+
+            footer.classList.remove("expand");
+
+        }
+
+    }
+
+}
+
+
+setSidebarState();
+
+
+/* =====================================================
+   TOGGLE SIDEBAR
+===================================================== */
+
+toggle.onclick = function () {
+
+    sidebar.classList.toggle("collapsed");
+
+    main.classList.toggle("expand");
+
+
+    if (footer) {
+
+        footer.classList.toggle("expand");
+
+    }
+
+
+    if (
+        sidebar.classList.contains("collapsed")
+    ) {
+
+        localStorage.setItem(
+            "sidebar",
+            "close"
+        );
+
+    } else {
+
+        localStorage.setItem(
+            "sidebar",
+            "open"
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   HAK AKSES
+===================================================== */
+
+if (level === "Operator") {
+
+    document
+        .querySelectorAll(".menu-admin")
+        .forEach(function(menu) {
+
+            menu.style.display =
+                "none";
+
+        });
+
+}
+
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+const STORAGE_KEY =
+    "users";
+
+
+/* =====================================================
+   DATA USER
+===================================================== */
+
+let dataUser =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+    ) || [];
+
+
+/* =====================================================
+   EDIT INDEX
+===================================================== */
+
+let editIndex = -1;
+
+
+/* =====================================================
+   SIMPAN LOCAL STORAGE
+===================================================== */
+
+function simpanData() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(dataUser)
+    );
+
+}
+
+
+/* =====================================================
+   STATISTIK
+===================================================== */
+
+function updateStatistik() {
+
+    const jumlahAdmin =
+        dataUser.filter(
+            function(user) {
+
+                return user.level === "Admin";
+
+            }
+        ).length;
+
+
+    const jumlahOperator =
+        dataUser.filter(
+            function(user) {
+
+                return user.level === "Operator";
+
+            }
+        ).length;
+
+
+    totalUser.textContent = dataUser.length;
+
+    totalAdmin.textContent =
+        jumlahAdmin;
+
+    totalOperator.textContent =
+        jumlahUser;
+
+}
+
+
+/* =====================================================
+   TAMPIL DATA
+===================================================== */
+
+function tampilData(
+    data = dataUser
+) {
+
+    tbodyUser.innerHTML = "";
+
+
+    updateStatistik();
+
+
+    if (data.length === 0) {
+
+        tbodyUser.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="text-center empty-data"
+                >
+
+                    <i
+                        class="bi bi-inbox fs-2 d-block mb-2"
+                    ></i>
+
+                    Belum ada data user
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(
+        function(user) {
+
+            const index =
+                dataUser.indexOf(user);
+
+
+            const tr =
+                document.createElement("tr");
+
+
+            let badgeLevel = "";
+
+
+            if (user.level === "Admin") {
+
+                badgeLevel = `
+
+                    <span class="badge-admin">
+
+                        <i
+                            class="bi bi-shield-check me-1"
+                        ></i>
+
+                        Admin
+
+                    </span>
+
+                `;
+
+            } else {
+
+                badgeLevel = `
+
+                    <span class="badge-operator">
+
+                        <i
+                            class="bi bi-person-workspace me-1"
+                        ></i>
+
+                        Operator
+
+                    </span>
+
+                `;
+
+            }
+
+
+            tr.innerHTML = `
+
+                <td class="text-center">
+                    ${index + 1}
+                </td>
+
+
+                <td>
+
+                    <span class="username-badge">
+
+                        <i class="bi bi-person"></i>
+
+                        ${escapeHTML(
+                            user.username
+                        )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(
+                        user.nama
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    <span class="password-cell">
+
+                        ••••••••
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${badgeLevel}
+
+                </td>
+
+
+                <td class="text-center">
+
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm btn-action me-1"
+                        onclick="editUser(${index})"
+                        title="Edit"
+                    >
+
+                        <i class="bi bi-pencil"></i>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm btn-action"
+                        onclick="hapusUser(${index})"
+                        title="Hapus"
+                    >
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbodyUser.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        text ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderData() {
+
+    tampilData(
+        dataUser
+    );
+
+}
+
+
+/* =====================================================
+   TAMBAH USER
+===================================================== */
+
+btnTambah.addEventListener(
+    "click",
+    function() {
+
+        editIndex = -1;
+
+
+        modalTitle.textContent =
+            "Tambah User";
+
+
+        formUser.reset();
+
+
+        passwordInput.type =
+            "password";
+
+
+        togglePassword.innerHTML =
+            '<i class="bi bi-eye"></i>';
+
+
+        modalUser.show();
+
+    }
+);
+
+
+/* =====================================================
+   SIMPAN USER
+===================================================== */
+
+formUser.addEventListener(
+    "submit",
+    function(e) {
+
+        e.preventDefault();
+
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const nama =
+            document
+                .getElementById("nama")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value
+                .trim();
+
+
+        const level =
+            document
+                .getElementById("level")
+                .value;
+
+
+        /* =========================
+           VALIDASI
+        ========================= */
+
+        if (
+            username === "" ||
+            nama === "" ||
+            password === "" ||
+            level === ""
+        ) {
+
+            alert(
+                "Semua data harus diisi."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           CEK USERNAME DUPLIKAT
+        ========================= */
+
+        const duplicate =
+            dataUser.some(
+                function(item, index) {
+
+                    return (
+
+                        item.username
+                            .toLowerCase() ===
+                        username.toLowerCase()
+
+                        &&
+
+                        index !== editIndex
+
+                    );
+
+                }
+            );
+
+
+        if (duplicate) {
+
+            alert(
+                "Username sudah digunakan."
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           EDIT
+        ========================= */
+
+        if (editIndex !== -1) {
+
+            dataUser[editIndex] = {
+
+                username:
+                    username,
+
+                nama:
+                    nama,
+
+                password:
+                    password,
+
+                level:
+                    level
+
+            };
+
+        }
+
+
+        /* =========================
+           TAMBAH
+        ========================= */
+
+        else {
+
+            dataUser.push({
+
+                username:
+                    username,
+
+                nama:
+                    nama,
+
+                password:
+                    password,
+
+                level:
+                    level
+
+            });
+
+        }
+
+
+        /* =========================
+           SIMPAN
+        ========================= */
+
+        simpanData();
+
+        renderData();
+
+        modalUser.hide();
+
+        formUser.reset();
+
+        editIndex = -1;
+
+    }
+);
+
+
+/* =====================================================
+   EDIT USER
+===================================================== */
+
+function editUser(index) {
+
+    const data =
+        dataUser[index];
+
+
+    if (!data) {
+
+        return;
+
+    }
+
+
+    editIndex =
+        index;
+
+
+    document
+        .getElementById("username")
+        .value =
+        data.username;
+
+
+    document
+        .getElementById("nama")
+        .value =
+        data.nama;
+
+
+    document
+        .getElementById("password")
+        .value =
+        data.password;
+
+
+    document
+        .getElementById("level")
+        .value =
+        data.level;
+
+
+    passwordInput.type =
+        "password";
+
+
+    togglePassword.innerHTML =
+        '<i class="bi bi-eye"></i>';
+
+
+    modalTitle.textContent =
+        "Edit User";
+
+
+    modalUser.show();
+
+}
+
+
+/* =====================================================
+   HAPUS USER
+===================================================== */
+
+function hapusUser(index) {
+
+    const data =
+        dataUser[index];
+
+
+    if (!data) {
+
+        return;
+
+    }
+
+
+    /* =========================
+       CEK USER YANG SEDANG LOGIN
+    ========================= */
+
+    const usernameLogin =
+        sessionStorage.getItem(
+            "username"
+        );
+
+
+    if (
+        usernameLogin &&
+        data.username === usernameLogin
+    ) {
+
+        alert(
+            "User yang sedang login tidak dapat dihapus."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================
+       KONFIRMASI
+    ========================= */
+
+    const konfirmasi =
+        confirm(
+            `Hapus user "${data.nama}"?`
+        );
+
+
+    if (!konfirmasi) {
+
+        return;
+
+    }
+
+
+    dataUser.splice(
+        index,
+        1
+    );
+
+
+    simpanData();
+
+    renderData();
+
+}
+
+
+/* =====================================================
+   PENCARIAN
+===================================================== */
+
+searchUser.addEventListener(
+    "input",
+    function() {
+
+        const keyword =
+            this.value
+                .toLowerCase()
+                .trim();
+
+
+        if (keyword === "") {
+
+            renderData();
+
+            return;
+
+        }
+
+
+        const hasil =
+            dataUser.filter(
+                function(item) {
+
+                    return (
+
+                        item.username
+                            .toLowerCase()
+                            .includes(keyword)
+
+                        ||
+
+                        item.nama
+                            .toLowerCase()
+                            .includes(keyword)
+
+                        ||
+
+                        item.level
+                            .toLowerCase()
+                            .includes(keyword)
+
+                    );
+
+                }
+            );
+
+
+        tampilData(
+            hasil
+        );
+
+    }
+);
+
+
+/* =====================================================
+   SHOW / HIDE PASSWORD
+===================================================== */
+
+togglePassword.addEventListener(
+    "click",
+    function() {
+
+        if (
+            passwordInput.type ===
+            "password"
+        ) {
+
+            passwordInput.type =
+                "text";
+
+
+            togglePassword.innerHTML =
+                '<i class="bi bi-eye-slash"></i>';
+
+        } else {
+
+            passwordInput.type =
+                "password";
+
+
+            togglePassword.innerHTML =
+                '<i class="bi bi-eye"></i>';
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutBtn.addEventListener(
+    "click",
+    function(e) {
+
+        e.preventDefault();
+
+
+        sessionStorage.clear();
+
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+/* =====================================================
+   TOOLTIP
+===================================================== */
+const tooltipTriggerList =
+    document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    );
+tooltipTriggerList.forEach(
+    function(element) {
+        new bootstrap.Tooltip(
+            element
+        );
+    }
+);
+/* =====================================================
+   TAMPIL DATA AWAL
+===================================================== */
+
+renderData();
+</script>
+
+</body>
+</html>
